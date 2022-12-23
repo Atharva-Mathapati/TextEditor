@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -12,6 +10,7 @@ public class Editor extends JFrame {
     private JTextPane input;
     private JTextArea output;
     private JLabel running;
+    private JLabel exitCode;
 
     public Editor() {
         setContentPane(mainPanel);
@@ -58,7 +57,6 @@ public class Editor extends JFrame {
                             // Read the output from the command
                             System.out.println("Here is the standard output of the command:");
                             String s;
-
                             while (true) {
                                 running.setText("Running");
                                 if ((s = stdInput.readLine()) == null) break;
@@ -77,9 +75,14 @@ public class Editor extends JFrame {
         //                            }
         //                        });
                             }
+                            executionProcess.waitFor();
+                            exitCode.setText("Process finished with exit code " + executionProcess.exitValue());
                             running.setText("Idle");
                             System.out.println("Done");
                         } catch (IOException ex) {
+                            ex.printStackTrace();
+                            throw new RuntimeException(ex);
+                        } catch (InterruptedException ex) {
                             ex.printStackTrace();
                             throw new RuntimeException(ex);
                         }
