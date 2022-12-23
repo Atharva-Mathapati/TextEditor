@@ -65,7 +65,7 @@ public class Editor extends JFrame {
                                 System.out.println(s);
                                 // JTextArea
                                 output.append(s + "\n");
-//                                document.insertString(document.getLength(), "\n" + s, null);
+//                              document.insertString(document.getLength(), "\n" + s, null);
                                 System.out.println("EDT Thread: " + SwingUtilities.isEventDispatchThread());
         //                        SwingUtilities.invokeLater(new Runnable() {
         //                            @Override
