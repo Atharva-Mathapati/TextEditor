@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TaskSwift.iml" filepath="$PROJECT_DIR$/TaskSwift.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TextEditor.iml" filepath="$PROJECT_DIR$/TextEditor.iml" />
     </modules>
   </component>
 </project>
