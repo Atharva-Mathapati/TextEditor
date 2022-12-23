@@ -11,6 +11,7 @@ public class Editor extends JFrame {
     private JButton clear;
     private JTextPane input;
     private JTextArea output;
+    private JLabel running;
 
     public Editor() {
         setContentPane(mainPanel);
@@ -36,8 +37,6 @@ public class Editor extends JFrame {
                 Thread updateOutput = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        // JTextPane vs JTextArea
-                        // StyledDocument document = output.getStyledDocument();
                         try {
                             PrintWriter out = new PrintWriter("foo.swift");
                             out.println(input.getText());
@@ -61,11 +60,10 @@ public class Editor extends JFrame {
                             String s;
 
                             while (true) {
+                                running.setText("Running");
                                 if ((s = stdInput.readLine()) == null) break;
                                 System.out.println(s);
-                                // JTextArea
                                 output.append(s + "\n");
-//                              document.insertString(document.getLength(), "\n" + s, null);
                                 System.out.println("EDT Thread: " + SwingUtilities.isEventDispatchThread());
         //                        SwingUtilities.invokeLater(new Runnable() {
         //                            @Override
@@ -79,13 +77,11 @@ public class Editor extends JFrame {
         //                            }
         //                        });
                             }
+                            running.setText("Idle");
                             System.out.println("Done");
                         } catch (IOException ex) {
                             ex.printStackTrace();
                             throw new RuntimeException(ex);
-//                        } catch (BadLocationException ex) {
-//                            ex.printStackTrace();
-//                            throw new RuntimeException(ex);
                         }
                     }
                 });
