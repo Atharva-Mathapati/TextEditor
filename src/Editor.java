@@ -56,19 +56,16 @@ public class Editor extends JFrame {
 
                             // Read the output of the program
                             String s;
-                            while (true) {
-                                if ((s = stdInput.readLine()) == null) break;
+                            while ((s = stdInput.readLine()) != null) {
                                 System.out.println(s);
                                 output.append(s + "\n");
                             }
+
                             executionProcess.waitFor();
                             exitCode.setText("Process finished with exit code " + executionProcess.exitValue());
                             running.setText("Idle");
                             // System.out.println("Done");
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                            throw new RuntimeException(ex);
-                        } catch (InterruptedException ex) {
+                        } catch (IOException | InterruptedException ex) {
                             ex.printStackTrace();
                             throw new RuntimeException(ex);
                         }

@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SyntaxHighlighting extends DocumentFilter {
-    private final Pattern pattern = Pattern.compile("(var |let )");
+    private final Pattern pattern = Pattern.compile("(var |let |String |Int |Bool |print |while |func |if |else |return)");
     private Matcher matcher;
     private final AttributeSet keywordAttributes = new SimpleAttributeSet();
     private final AttributeSet defaultAttributes = new SimpleAttributeSet();
