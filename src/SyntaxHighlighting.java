@@ -21,22 +21,8 @@ public class SyntaxHighlighting extends DocumentFilter {
 
     @Override
     public void insertString(FilterBypass fb, int offset, String text, AttributeSet attr) throws BadLocationException {
-        //System.out.println(string);
-
-//        matcher = pattern.matcher(fb.getDocument().getText(0, fb.getDocument().getLength()));
-//        if (matcher.lookingAt()) {
-//            System.out.println("heerrerere");
-//            while (matcher.find()) {
-//                System.out.println(matcher.start());
-//                System.out.println(matcher.end());
-//                super.remove(fb, matcher.start(), matcher.end() - matcher.start());
-//                super.insertString(fb, matcher.start(), string, textAttributes);
-//            }
-//        } else {
        super.insertString(fb, offset, text, attr);
        highlight();
-//        }
-
     }
 
     @Override
@@ -50,10 +36,15 @@ public class SyntaxHighlighting extends DocumentFilter {
         super.remove(fb, offset, length);
         highlight();
     }
-    public void highlight() {
+    public void highlight() throws BadLocationException {
         pane.getStyledDocument().setCharacterAttributes(0, pane.getText().length(), defaultAttributes, false);
         matcher = pattern.matcher(pane.getText());
         while (matcher.find()) {
+            // Words like "wallet" should not be highlighted
+            // i.e. words at the beginning of a line should be highlighted
+            if (matcher.start() != 0 && !pane.getText(matcher.start()-1,1).equals(" ") && !pane.getText(matcher.start()-1,1).equals("\n")) {
+                continue;
+            }
             pane.getStyledDocument().setCharacterAttributes(matcher.start(), matcher.end()- matcher.start(), keywordAttributes, false);
         }
 
